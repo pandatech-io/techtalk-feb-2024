@@ -6,7 +6,7 @@ type Finder struct{}
 
 func (f *Finder) Find(people []*Person, query string) *Person {
 	for _, person := range people {
-		if strings.Contains(person.Name, query) {
+		if strings.ToLower(person.Name) == query {
 			return person
 		}
 	}

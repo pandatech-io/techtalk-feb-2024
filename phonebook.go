@@ -2,6 +2,7 @@ package phonebook
 
 import (
 	"errors"
+	"strings"
 )
 
 var (
@@ -15,13 +16,13 @@ type Person struct {
 }
 
 type Phonebook struct {
-	People []*Person
+	people []*Person
 	finder *Finder
 }
 
 func New(finder *Finder) *Phonebook {
 	return &Phonebook{
-		People: make([]*Person, 0),
+		people: make([]*Person, 0),
 		finder: finder,
 	}
 }
@@ -31,11 +32,18 @@ func (p *Phonebook) Find(name string) (string, error) {
 		return "", ErrMissingArgs
 	}
 
-	person := p.finder.Find(p.People, name)
+	person := p.finder.Find(p.people, strings.ToLower(name))
 
 	if person == nil {
 		return "", ErrNoPersonFound
 	}
 
 	return person.Phone, nil
+}
+
+func (p *Phonebook) Create(name, phoneNumber string) {
+	p.people = append(p.people, &Person{
+		Name:  name,
+		Phone: phoneNumber,
+	})
 }
