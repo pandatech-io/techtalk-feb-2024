@@ -17,10 +17,14 @@ type Person struct {
 
 type Phonebook struct {
 	people []*Person
-	finder *Finder
+	finder IFinder
 }
 
-func New(finder *Finder) *Phonebook {
+type IFinder interface {
+	Find(people []*Person, query string) *Person
+}
+
+func New(finder IFinder) *Phonebook {
 	return &Phonebook{
 		people: make([]*Person, 0),
 		finder: finder,
