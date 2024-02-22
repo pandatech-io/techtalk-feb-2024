@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -45,6 +46,7 @@ func RunHttpServer() {
 		// Block until cancel() is called
 		<-egCtx.Done()
 		fmt.Println("HTTP server start graceful shutdown on port", port)
+		time.Sleep(1 * time.Second)
 		err := httpServer.Shutdown(context.Background()) // Go library for HTTP server graceful shutdown
 		fmt.Println("HTTP server finish graceful shutdown on port", port)
 		return err

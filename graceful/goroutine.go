@@ -26,15 +26,16 @@ func RunChannel() {
 }
 
 func RunBufferChannel() {
-	ch := make(chan int, 10)
+	capacity := 10
+	ch := make(chan int, capacity)
 
 	var wg sync.WaitGroup
 
+	wg.Add(capacity) // 10
 	for i := 0; i < 10; i++ {
-		wg.Add(1)
 		go func(num int) {
 			ch <- num
-			wg.Done()
+			wg.Done() // 9 8 7 ... 0
 		}(i)
 	}
 
