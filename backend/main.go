@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func main() {
@@ -22,6 +23,8 @@ func main() {
 		cors.New(corsCfg),
 	)
 
+	RegisterHandlers(h, &serverImpl{})
+
 	srv := &http.Server{
 		Addr:              ":8080",
 		Handler:           h,
@@ -30,4 +33,12 @@ func main() {
 	if err := srv.ListenAndServe(); err != nil {
 		log.Println(err)
 	}
+}
+
+type serverImpl struct{}
+
+func (s *serverImpl) GetIds(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"data": uuid.New(),
+	})
 }
