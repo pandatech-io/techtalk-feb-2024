@@ -9,7 +9,7 @@ paths:
     get: 
       responses:
         '200':
-          description: Request otp success
+          description: Success generate id
           content:
             application/json:
               schema:

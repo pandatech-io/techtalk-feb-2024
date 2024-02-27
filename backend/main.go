@@ -12,14 +12,13 @@ import (
 func main() {
 	h := gin.New()
 	corsCfg := cors.Config{
-		AllowAllOrigins:  true,
-		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPatch, http.MethodPut, http.MethodDelete, http.MethodOptions},
-		AllowCredentials: true,
-		AllowHeaders:     []string{"Content-Type", "Authorization", "Origin"},
-		ExposeHeaders:    []string{"*"},
+		AllowAllOrigins: true,
+		AllowMethods:    []string{http.MethodGet, http.MethodPost, http.MethodPatch, http.MethodPut, http.MethodDelete, http.MethodOptions},
+		ExposeHeaders:   []string{"*"},
 	}
 
 	h.Use(
+		gin.Logger(),
 		cors.New(corsCfg),
 	)
 
